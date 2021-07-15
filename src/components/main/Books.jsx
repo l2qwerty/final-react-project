@@ -3,6 +3,7 @@ import Grid from "@material-ui/core/Grid";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import Cards from "./Cards";
 import Service from "../../services/http-service";
+import MainSlider from "./Slider/Slider";
 
 function Books() {
   const [cards, setCards] = useState(null);
@@ -15,6 +16,7 @@ function Books() {
   }, []);
   return (
     <>
+      <MainSlider />
       {cards ? (
         <Grid container justifyContent="center" alignItems="center">
           {cards.map((item) => (
