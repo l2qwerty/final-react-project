@@ -8,16 +8,14 @@ import NotFound from "../components/NotFound";
 
 function Routes() {
   return (
-    <>
-      <Switch>
-        <Route path="/books" component={BooksRoutes} />
-        <Route path="/contacts" component={Contacts} />
-        <Route path="/login" component={Logout} />
-        <Route path="/cart" component={Cart} />
-        <Route exact path="/" render={() => <Redirect to="/books" />} />
-        <Route path="*" component={NotFound} />
-      </Switch>
-    </>
+    <Switch>
+      <Route path="/books" component={BooksRoutes} />
+      <Route path="/contacts" component={Contacts} />
+      <Route path="/login" component={Logout} />
+      <Route path="/cart" component={Cart} />
+      <Route exact path="/" render={() => <Redirect to="/books" />} />
+      <Route path="*" component={NotFound} />
+    </Switch>
   );
 }
 
