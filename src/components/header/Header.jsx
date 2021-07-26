@@ -1,10 +1,13 @@
+/* eslint-disable react/forbid-prop-types */
 import React from "react";
+import { useSelector } from "react-redux";
 import { makeStyles } from "@material-ui/core/styles";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
 import MenuBookTwoToneIcon from "@material-ui/icons/MenuBookTwoTone";
 import { Link } from "react-router-dom";
+import { selectCartNumber } from "../../redux/cart/cartReducer";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -38,6 +41,7 @@ const useStyles = makeStyles((theme) => ({
 
 function Header() {
   const classes = useStyles();
+  const cartNumber = useSelector(selectCartNumber);
 
   return (
     <header className={classes.root}>
@@ -62,7 +66,7 @@ function Header() {
               className="MuiButtonBase-root MuiButton-root MuiButton-contained"
               to="/cart"
             >
-              Cart
+              {cartNumber > 0 ? cartNumber : ""} Cart
             </Link>
           </div>
           <div className={classes.link}>

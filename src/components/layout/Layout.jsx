@@ -13,6 +13,9 @@ const useStyles = makeStyles({
   body: {
     minHeight: "76vh",
   },
+  footer: {
+    marginTop: "20px",
+  },
 });
 
 function Layout() {
@@ -27,7 +30,7 @@ function Layout() {
           <BooksRoutes />
         </Routes>
       </Grid>
-      <Grid item xs={12}>
+      <Grid item xs={12} className={classes.footer}>
         <Footer />
       </Grid>
     </Grid>

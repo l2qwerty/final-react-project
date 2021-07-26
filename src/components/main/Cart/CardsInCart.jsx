@@ -6,17 +6,17 @@ import CardActions from "@material-ui/core/CardActions";
 import CardContent from "@material-ui/core/CardContent";
 import CardMedia from "@material-ui/core/CardMedia";
 import IconButton from "@material-ui/core/IconButton";
-import ShoppingCartTwoToneIcon from "@material-ui/icons/ShoppingCartTwoTone";
-import StarTwoToneIcon from "@material-ui/icons/StarTwoTone";
-import ShareTwoToneIcon from "@material-ui/icons/ShareTwoTone";
+import DeleteTwoToneIcon from "@material-ui/icons/DeleteTwoTone";
+import ExposurePlus1Icon from "@material-ui/icons/ExposurePlus1";
+import ExposureNeg1Icon from "@material-ui/icons/ExposureNeg1";
 import Typography from "@material-ui/core/Typography";
 import { Link } from "react-router-dom";
 import { PropTypes } from "prop-types";
-import { addToCart } from "../../redux/cart/cartReducer";
+import { addToCart, addCount, degCount } from "../../../redux/cart/cartReducer";
 
 const useStyles = makeStyles({
   root: {
-    maxWidth: 345,
+    maxWidth: 600,
     marginBottom: "30px",
   },
   btnRight: {
@@ -27,9 +27,11 @@ const useStyles = makeStyles({
     color: "black",
   },
 });
-function Cards({ id, title, coast, img, alt, text, path }) {
-  const cards = useSelector((state) => state.cart.cards);
-  const check = cards.some((item) => item.id === id);
+function CardsInCart({ id, title, coast, img, alt, text, path }) {
+  const amount = useSelector(
+    (state) => state.cart.cards.find((e) => e.id === id).amount
+  );
+  const count = coast * amount;
   const dispatch = useDispatch();
   const classes = useStyles();
   return (
@@ -38,7 +40,7 @@ function Cards({ id, title, coast, img, alt, text, path }) {
         <Typography gutterBottom variant="h5" component="h2">
           {title}
         </Typography>
-        <CardMedia id={id} component="img" alt={alt} height="400" image={img} />
+        <CardMedia id={id} component="img" alt={alt} height="340" image={img} />
         <CardContent>
           <Typography variant="body2" color="textSecondary" component="p">
             {text}
@@ -46,20 +48,26 @@ function Cards({ id, title, coast, img, alt, text, path }) {
         </CardContent>
         <CardActions>
           <IconButton
-            aria-label="add to favorites"
+            aria-label="add +1"
             onClick={(e) => {
+              dispatch(addCount(id));
               e.preventDefault();
             }}
           >
-            <StarTwoToneIcon />
+            <ExposurePlus1Icon />
           </IconButton>
+          <Typography gutterBottom variant="h6" component="h2">
+            amount: {amount}
+          </Typography>
           <IconButton
-            aria-label="share"
+            aria-label="remove -1"
             onClick={(e) => {
+              // eslint-disable-next-line no-unused-expressions
+              amount > 1 ? dispatch(degCount(id)) : e.preventDefault();
               e.preventDefault();
             }}
           >
-            <ShareTwoToneIcon />
+            <ExposureNeg1Icon />
           </IconButton>
           <Typography
             gutterBottom
@@ -67,18 +75,17 @@ function Cards({ id, title, coast, img, alt, text, path }) {
             component="h2"
             className={classes.btnRight}
           >
-            {coast}$
+            {count}$
           </Typography>
           <IconButton
-            color={check ? "secondary" : "primary"}
-            aria-label="buy"
+            aria-label="delete card"
             className={classes.btnRight}
             onClick={(e) => {
               dispatch(addToCart(id));
               e.preventDefault();
             }}
           >
-            <ShoppingCartTwoToneIcon />
+            <DeleteTwoToneIcon />
           </IconButton>
         </CardActions>
       </Link>
@@ -86,14 +93,14 @@ function Cards({ id, title, coast, img, alt, text, path }) {
   );
 }
 
-Cards.propTypes = {
-  coast: PropTypes.number.isRequired,
+CardsInCart.propTypes = {
   id: PropTypes.number.isRequired,
   title: PropTypes.string.isRequired,
+  coast: PropTypes.number.isRequired,
   img: PropTypes.string.isRequired,
   alt: PropTypes.string.isRequired,
   text: PropTypes.string.isRequired,
   path: PropTypes.string.isRequired,
 };
 
-export default Cards;
+export default CardsInCart;
