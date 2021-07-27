@@ -5,11 +5,9 @@ function NotFound() {
   const location = useLocation();
 
   return (
-    <>
-      <h2>
-        Ups, wrong way <code>{location.pathname}</code>
-      </h2>
-    </>
+    <h2>
+      Ups, wrong way <code>{location.pathname}</code>
+    </h2>
   );
 }
 

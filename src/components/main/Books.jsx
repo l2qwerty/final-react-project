@@ -3,21 +3,25 @@ import Grid from "@material-ui/core/Grid";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import Cards from "./Cards";
 import Service from "../../services/http-service";
+import MainSlider from "./Slider/Slider";
 
 function Books() {
-  const [cards, setCards] = useState(null);
+  const [goods, setCards] = useState(null);
   useEffect(() => {
     Service.get("/goods")
-      .then((res) => setCards(res.response))
+      .then((res) => {
+        setCards(res.response);
+      })
       .catch((error) => {
         throw new Error(error);
       });
   }, []);
   return (
     <>
-      {cards ? (
+      <MainSlider />
+      {goods ? (
         <Grid container justifyContent="center" alignItems="center">
-          {cards.map((item) => (
+          {goods.map((item) => (
             <Grid
               item
               lg={4}
@@ -27,7 +31,9 @@ function Books() {
               key={item.id}
             >
               <Cards
+                id={item.id}
                 title={item.title}
+                coast={item.coast}
                 img={item.img}
                 alt={item.alt}
                 text={item.text}

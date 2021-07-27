@@ -1,0 +1,31 @@
+.slides .slick-prev,
+.slides .slick-next {
+  position: absolute;
+  top: 50%;
+  z-index: 1;
+}
+
+.slides {
+  position: relative;
+  margin-bottom: 40px;
+}
+
+.slides .slick-prev {
+  left: 7%;
+}
+
+.slides .slick-next {
+  right: 7%;
+}
+
+.image {
+  width: 90%;
+  height: 50vh;
+  border-radius: 10px;
+  justify-content: center;
+  margin: 0 auto;
+}
+.slick-prev:before,
+.slick-next:before {
+  font-size: 30px;
+}
